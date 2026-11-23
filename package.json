@@ -1,0 +1,29 @@
+{
+  "name": "e24-hostel-allocation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "node --env-file-if-exists=.env.local scripts/db.mjs migrate",
+    "db:import": "node --env-file-if-exists=.env.local scripts/db.mjs import"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "next": "15.3.9",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/pg": "8.23.1"
+  }
+}

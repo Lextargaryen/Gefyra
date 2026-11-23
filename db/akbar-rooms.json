@@ -1,0 +1,786 @@
+[
+  {
+    "id": "akbar-1101",
+    "roomLabel": "1101",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1102",
+    "roomLabel": "1102",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1103",
+    "roomLabel": "1103",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1104",
+    "roomLabel": "1104",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1105",
+    "roomLabel": "1105",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1106",
+    "roomLabel": "1106",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1107",
+    "roomLabel": "1107",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1108",
+    "roomLabel": "1108",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1109",
+    "roomLabel": "1109",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1110",
+    "roomLabel": "1110",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1111",
+    "roomLabel": "1111",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1112",
+    "roomLabel": "1112",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1113",
+    "roomLabel": "1113",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1114",
+    "roomLabel": "1114",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1115",
+    "roomLabel": "1115",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1116",
+    "roomLabel": "1116",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1117",
+    "roomLabel": "1117",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1118",
+    "roomLabel": "1118",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1119",
+    "roomLabel": "1119",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1120",
+    "roomLabel": "1120",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1121",
+    "roomLabel": "1121",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1122",
+    "roomLabel": "1122",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1123",
+    "roomLabel": "1123",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1124",
+    "roomLabel": "1124",
+    "hostel": "Akbar Wing",
+    "floor": "Ground",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1225",
+    "roomLabel": "1225",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1226",
+    "roomLabel": "1226",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1227",
+    "roomLabel": "1227",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1228",
+    "roomLabel": "1228",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1229",
+    "roomLabel": "1229",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1230",
+    "roomLabel": "1230",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1231",
+    "roomLabel": "1231",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1232",
+    "roomLabel": "1232",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1233",
+    "roomLabel": "1233",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1234",
+    "roomLabel": "1234",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1235",
+    "roomLabel": "1235",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1236",
+    "roomLabel": "1236",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1237",
+    "roomLabel": "1237",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1238",
+    "roomLabel": "1238",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1239",
+    "roomLabel": "1239",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1240",
+    "roomLabel": "1240",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1241",
+    "roomLabel": "1241",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1242",
+    "roomLabel": "1242",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1243",
+    "roomLabel": "1243",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1244",
+    "roomLabel": "1244",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1245",
+    "roomLabel": "1245",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1246",
+    "roomLabel": "1246",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1247",
+    "roomLabel": "1247",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1248",
+    "roomLabel": "1248",
+    "hostel": "Akbar Wing",
+    "floor": "1",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1349",
+    "roomLabel": "1349",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1350",
+    "roomLabel": "1350",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1351",
+    "roomLabel": "1351",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1352",
+    "roomLabel": "1352",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1353",
+    "roomLabel": "1353",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1354",
+    "roomLabel": "1354",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1355",
+    "roomLabel": "1355",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1356",
+    "roomLabel": "1356",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1357",
+    "roomLabel": "1357",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1358",
+    "roomLabel": "1358",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1359",
+    "roomLabel": "1359",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1360",
+    "roomLabel": "1360",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1361",
+    "roomLabel": "1361",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1362",
+    "roomLabel": "1362",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1363",
+    "roomLabel": "1363",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1364",
+    "roomLabel": "1364",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1365",
+    "roomLabel": "1365",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1366",
+    "roomLabel": "1366",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1367",
+    "roomLabel": "1367",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1368",
+    "roomLabel": "1368",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1369",
+    "roomLabel": "1369",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1370",
+    "roomLabel": "1370",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1371",
+    "roomLabel": "1371",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": true,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1372",
+    "roomLabel": "1372",
+    "hostel": "Akbar Wing",
+    "floor": "2",
+    "active": false,
+    "capacity": 3
+  },
+  {
+    "id": "akbar-1473",
+    "roomLabel": "1473",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1474",
+    "roomLabel": "1474",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1475",
+    "roomLabel": "1475",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1476",
+    "roomLabel": "1476",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1477",
+    "roomLabel": "1477",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1478",
+    "roomLabel": "1478",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1479",
+    "roomLabel": "1479",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1480",
+    "roomLabel": "1480",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1481",
+    "roomLabel": "1481",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1482",
+    "roomLabel": "1482",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1483",
+    "roomLabel": "1483",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1484",
+    "roomLabel": "1484",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1485",
+    "roomLabel": "1485",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1486",
+    "roomLabel": "1486",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1487",
+    "roomLabel": "1487",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1488",
+    "roomLabel": "1488",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1489",
+    "roomLabel": "1489",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1490",
+    "roomLabel": "1490",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1491",
+    "roomLabel": "1491",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1492",
+    "roomLabel": "1492",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1493",
+    "roomLabel": "1493",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1494",
+    "roomLabel": "1494",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1495",
+    "roomLabel": "1495",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1496",
+    "roomLabel": "1496",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 4
+  },
+  {
+    "id": "akbar-1497",
+    "roomLabel": "1497",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 2
+  },
+  {
+    "id": "akbar-1498",
+    "roomLabel": "1498",
+    "hostel": "Akbar Wing",
+    "floor": "Top",
+    "active": true,
+    "capacity": 2
+  }
+]
