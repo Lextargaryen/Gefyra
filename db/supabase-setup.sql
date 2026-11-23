@@ -1,0 +1,132 @@
+-- Gefyra: run this entire file in Supabase Dashboard > SQL Editor.
+-- Schema source: db/schema.sql. Inventory source: db/akbar-rooms.json.
+-- Creates tables and inserts missing rooms; existing rooms and bookings are preserved.
+-- RLS is enabled with no client policies: access goes through the Next.js server.
+-- Configure DATABASE_URL with the privileged server-side Postgres connection string.
+-- Student identities and names are configured in ELIGIBLE_STUDENTS_JSON, not stored here.
+
+BEGIN;
+SET LOCAL search_path = public;
+CREATE TABLE IF NOT EXISTS rooms (
+  id text PRIMARY KEY,
+  room_label text NOT NULL,
+  hostel text NOT NULL,
+  floor text,
+  active boolean NOT NULL DEFAULT true,
+  capacity smallint NOT NULL DEFAULT 3 CHECK (capacity BETWEEN 1 AND 4),
+  UNIQUE (hostel, room_label)
+);
+ALTER TABLE rooms ADD COLUMN IF NOT EXISTS capacity smallint NOT NULL DEFAULT 3 CHECK (capacity BETWEEN 1 AND 4);
+CREATE TABLE IF NOT EXISTS bookings (
+  student_id text PRIMARY KEY,
+  room_id text NOT NULL REFERENCES rooms(id) ON DELETE RESTRICT,
+  slot smallint NOT NULL CHECK (slot BETWEEN 1 AND 4),
+  created_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (room_id, slot)
+);
+ALTER TABLE bookings DROP CONSTRAINT IF EXISTS bookings_slot_check;
+ALTER TABLE bookings ADD CONSTRAINT bookings_slot_check CHECK (slot BETWEEN 1 AND 4);
+ALTER TABLE rooms ENABLE ROW LEVEL SECURITY;
+ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
+-- Load the room inventory without overwriting existing room configuration.
+INSERT INTO rooms (id, room_label, hostel, floor, active, capacity) VALUES
+  ('akbar-1101', '1101', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1102', '1102', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1103', '1103', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1104', '1104', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1105', '1105', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1106', '1106', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1107', '1107', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1108', '1108', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1109', '1109', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1110', '1110', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1111', '1111', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1112', '1112', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1113', '1113', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1114', '1114', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1115', '1115', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1116', '1116', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1117', '1117', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1118', '1118', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1119', '1119', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1120', '1120', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1121', '1121', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1122', '1122', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1123', '1123', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1124', '1124', 'Akbar Wing', 'Ground', false, 3),
+  ('akbar-1225', '1225', 'Akbar Wing', '1', false, 3),
+  ('akbar-1226', '1226', 'Akbar Wing', '1', true, 3),
+  ('akbar-1227', '1227', 'Akbar Wing', '1', true, 3),
+  ('akbar-1228', '1228', 'Akbar Wing', '1', true, 3),
+  ('akbar-1229', '1229', 'Akbar Wing', '1', true, 3),
+  ('akbar-1230', '1230', 'Akbar Wing', '1', true, 3),
+  ('akbar-1231', '1231', 'Akbar Wing', '1', true, 3),
+  ('akbar-1232', '1232', 'Akbar Wing', '1', true, 3),
+  ('akbar-1233', '1233', 'Akbar Wing', '1', true, 3),
+  ('akbar-1234', '1234', 'Akbar Wing', '1', true, 3),
+  ('akbar-1235', '1235', 'Akbar Wing', '1', true, 3),
+  ('akbar-1236', '1236', 'Akbar Wing', '1', true, 3),
+  ('akbar-1237', '1237', 'Akbar Wing', '1', true, 3),
+  ('akbar-1238', '1238', 'Akbar Wing', '1', true, 3),
+  ('akbar-1239', '1239', 'Akbar Wing', '1', true, 3),
+  ('akbar-1240', '1240', 'Akbar Wing', '1', true, 3),
+  ('akbar-1241', '1241', 'Akbar Wing', '1', true, 3),
+  ('akbar-1242', '1242', 'Akbar Wing', '1', true, 3),
+  ('akbar-1243', '1243', 'Akbar Wing', '1', true, 3),
+  ('akbar-1244', '1244', 'Akbar Wing', '1', true, 3),
+  ('akbar-1245', '1245', 'Akbar Wing', '1', true, 3),
+  ('akbar-1246', '1246', 'Akbar Wing', '1', true, 3),
+  ('akbar-1247', '1247', 'Akbar Wing', '1', true, 3),
+  ('akbar-1248', '1248', 'Akbar Wing', '1', false, 3),
+  ('akbar-1349', '1349', 'Akbar Wing', '2', false, 3),
+  ('akbar-1350', '1350', 'Akbar Wing', '2', true, 3),
+  ('akbar-1351', '1351', 'Akbar Wing', '2', true, 3),
+  ('akbar-1352', '1352', 'Akbar Wing', '2', true, 3),
+  ('akbar-1353', '1353', 'Akbar Wing', '2', true, 3),
+  ('akbar-1354', '1354', 'Akbar Wing', '2', true, 3),
+  ('akbar-1355', '1355', 'Akbar Wing', '2', true, 3),
+  ('akbar-1356', '1356', 'Akbar Wing', '2', true, 3),
+  ('akbar-1357', '1357', 'Akbar Wing', '2', true, 3),
+  ('akbar-1358', '1358', 'Akbar Wing', '2', true, 3),
+  ('akbar-1359', '1359', 'Akbar Wing', '2', true, 3),
+  ('akbar-1360', '1360', 'Akbar Wing', '2', true, 3),
+  ('akbar-1361', '1361', 'Akbar Wing', '2', true, 3),
+  ('akbar-1362', '1362', 'Akbar Wing', '2', true, 3),
+  ('akbar-1363', '1363', 'Akbar Wing', '2', true, 3),
+  ('akbar-1364', '1364', 'Akbar Wing', '2', true, 3),
+  ('akbar-1365', '1365', 'Akbar Wing', '2', true, 3),
+  ('akbar-1366', '1366', 'Akbar Wing', '2', true, 3),
+  ('akbar-1367', '1367', 'Akbar Wing', '2', true, 3),
+  ('akbar-1368', '1368', 'Akbar Wing', '2', true, 3),
+  ('akbar-1369', '1369', 'Akbar Wing', '2', true, 3),
+  ('akbar-1370', '1370', 'Akbar Wing', '2', true, 3),
+  ('akbar-1371', '1371', 'Akbar Wing', '2', true, 3),
+  ('akbar-1372', '1372', 'Akbar Wing', '2', false, 3),
+  ('akbar-1473', '1473', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1474', '1474', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1475', '1475', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1476', '1476', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1477', '1477', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1478', '1478', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1479', '1479', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1480', '1480', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1481', '1481', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1482', '1482', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1483', '1483', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1484', '1484', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1485', '1485', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1486', '1486', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1487', '1487', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1488', '1488', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1489', '1489', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1490', '1490', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1491', '1491', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1492', '1492', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1493', '1493', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1494', '1494', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1495', '1495', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1496', '1496', 'Akbar Wing', 'Top', true, 4),
+  ('akbar-1497', '1497', 'Akbar Wing', 'Top', true, 2),
+  ('akbar-1498', '1498', 'Akbar Wing', 'Top', true, 2)
+ON CONFLICT DO NOTHING;
+COMMIT;

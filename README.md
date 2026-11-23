@@ -21,6 +21,17 @@ npm run dev
 
 Open http://localhost:3000 and sign in with an eligible university Google account. The database is the source of truth for room availability and bookings.
 
+## Supabase quick setup
+
+1. In your Supabase project, open **SQL Editor**, create a new query, and paste the entire contents of [`db/supabase-setup.sql`](db/supabase-setup.sql). Click **Run**.
+2. This creates `public.rooms` and `public.bookings`, their constraints, row-level security, and the Akbar room inventory. Existing rooms and bookings are preserved on re-runs. Rooms reserved in the inventory remain inactive.
+3. Use the project's **Connect** panel to obtain the PostgreSQL connection strings. Set the transaction pooler URL as server-only `DATABASE_URL`, and use a direct or session pooler URL for `DATABASE_DIRECT_URL`. Use the privileged Postgres connection for the current server implementation; a Supabase API key is not a connection string.
+4. Configure the Google login, approved student roster, and booking window as described below. Student names and eligibility are supplied by `ELIGIBLE_STUDENTS_JSON`; there is no separate students table or Supabase Auth dependency.
+
+The setup SQL intentionally has no browser access policies. The app authenticates students and checks eligibility in its Next.js server before querying Postgres. See [Supabase row-level security](https://supabase.com/docs/guides/database/postgres/row-level-security).
+
+For later schema-only updates use `db/schema.sql` or `npm run db:migrate`. To apply intentional room inventory changes, use `npm run db:import -- db/akbar-rooms.json`; the quick setup only inserts missing rooms and does not update existing configuration.
+
 ## Configure live allocation
 
 The migration enables row-level security on both tables. The server connection must use a database role that can access those tables. Do not expose database credentials in client code. Review the room capacities and reserved rooms against the final allocation list before opening bookings.
