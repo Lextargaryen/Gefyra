@@ -1,19 +1,11 @@
 import 'server-only'
-import { Pool, type PoolClient } from 'pg'
-import { databaseConfig } from './database-config.mjs'
-import { bookingOpen, roster } from './config'
+import type { PoolClient } from 'pg'
+import { pool } from './database'
+import { bookingOpen } from './config'
 import type { Booking, Inventory, Room, RoomDetail } from './types'
 
 type RoomRecord = { id: string; room_label: string; hostel: string; floor: string | null; active: boolean; capacity: number }
-type Occupied = { student_id: string; slot: number }
-const database = globalThis as typeof globalThis & { e24Pool?: Pool }
-function pool() {
-  if (!database.e24Pool) {
-    database.e24Pool = new Pool({ ...databaseConfig(), max: 5, idleTimeoutMillis: 10_000, connectionTimeoutMillis: 5_000 })
-    database.e24Pool.on('error', () => console.error('An idle database connection was lost.'))
-  }
-  return database.e24Pool
-}
+type Occupied = { student_id: string; slot: number; display_name: string | null }
 function roomView(room: RoomRecord, occupied: number): Room {
   return { id: room.id, label: room.room_label, hostel: room.hostel, floor: room.floor, occupied, capacity: room.capacity,
     status: !room.active ? 'unavailable' : occupied >= room.capacity ? 'full' : occupied > 0 ? 'partial' : 'empty' }
@@ -29,16 +21,15 @@ export async function inventory(): Promise<Inventory> {
 export async function roomDetail(roomId: string, studentId: string): Promise<RoomDetail | null> {
   const { rows } = await pool().query<RoomRecord & { occupants: Occupied[] }>(`
     SELECT r.*, COALESCE(
-      json_agg(json_build_object('student_id', b.student_id, 'slot', b.slot) ORDER BY b.slot)
+      json_agg(json_build_object('student_id', b.student_id, 'slot', b.slot, 'display_name', es.display_name) ORDER BY b.slot)
         FILTER (WHERE b.student_id IS NOT NULL), '[]'
     ) AS occupants
-    FROM rooms r LEFT JOIN bookings b ON r.id = b.room_id WHERE r.id = $1 GROUP BY r.id`, [roomId])
+    FROM rooms r LEFT JOIN bookings b ON r.id = b.room_id LEFT JOIN eligible_students es ON es.student_id = b.student_id WHERE r.id = $1 GROUP BY r.id`, [roomId])
   const room = rows[0]
   const occupied = room?.occupants ?? []
   if (!room) return null
-  const names = new Map(roster().map(s => [s.studentId, s.displayName]))
   return { ...roomView(room, occupied.length), occupants: occupied.map(b => ({
-    displayName: names.get(b.student_id) ?? 'Occupied', isYou: b.student_id === studentId,
+    displayName: b.display_name ?? 'Occupied', isYou: b.student_id === studentId,
   })) }
 }
 export async function existingBooking(studentId: string, client?: PoolClient): Promise<Booking | null> {

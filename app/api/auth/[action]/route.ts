@@ -5,7 +5,9 @@ import { cookieOptions, eligible, oauthName, seal, sessionName, unseal } from '.
 
 type Context = { params: Promise<{ action: string }> }
 function go(path: string, origin: string) {
-  return NextResponse.redirect(new URL(path, origin), 303)
+  const response = NextResponse.redirect(new URL(path, origin), 303)
+  response.headers.set('Cache-Control', 'private, no-store')
+  return response
 }
 function session(response: NextResponse, origin: string, identity: { sub: string; email: string; hd: string }) {
   const seconds = 2 * 60 * 60
@@ -25,7 +27,7 @@ export async function GET(request: NextRequest, { params }: Context) {
     }
     const flow = unseal<OAuthFlow>(oauthName, request.cookies.get(oauthName)?.value)
     const identity = flow ? await finishGoogle(request.nextUrl.searchParams, flow, origin).catch(() => null) : null
-    const result = identity && eligible(identity) ? session(go('/rooms', origin), origin, identity) : go('/access-denied', origin)
+    const result = identity && (await eligible(identity)) ? session(go('/rooms', origin), origin, identity) : go('/access-denied', origin)
     result.cookies.set(oauthName, '', cookieOptions(origin, 0))
     return result
   } catch {

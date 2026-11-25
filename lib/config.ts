@@ -5,28 +5,11 @@ export const support = () => process.env.SUPPORT_EMAIL?.trim()
 export const domains = (key: string) => (process.env[key] ?? '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
 export const emailDomain = (email: string) => email.split('@')[1]
 const validDomain = (domain: string) => /^[a-z0-9-]+(?:\.[a-z0-9-]+)+$/.test(domain) && !/\.(?:invalid|example|test|localhost)$/.test(domain) && !/^(?:example\.(?:com|org|net)|gmail\.com|googlemail\.com)$/.test(domain)
-let liveRoster: Student[] | undefined
-export function roster(): Student[] {
-  if (liveRoster) return liveRoster
+export function universityDomains() {
   const emailDomains = domains('UNIVERSITY_EMAIL_DOMAINS')
   const hostedDomains = domains('UNIVERSITY_HOSTED_DOMAINS')
   if (!emailDomains.length || !hostedDomains.length || ![...emailDomains, ...hostedDomains].every(validDomain)) throw new Error('Configure the verified university domains.')
-  const entries: unknown = JSON.parse(process.env.ELIGIBLE_STUDENTS_JSON ?? '[]')
-  if (!Array.isArray(entries) || !entries.length) throw new Error('Configure the private roster.')
-  const ids = new Set<string>()
-  const emails = new Set<string>()
-  liveRoster = entries.map((row: Partial<Student> | null) => {
-    const studentId = typeof row?.studentId === 'string' ? row.studentId.trim() : ''
-    const universityEmail = typeof row?.universityEmail === 'string' ? row.universityEmail.trim().toLowerCase() : ''
-    const displayName = typeof row?.displayName === 'string' ? row.displayName.trim() : ''
-    if (!/^[\w./-]{1,80}$/.test(studentId) || /^demo-/i.test(studentId) || !displayName || displayName.length > 120 ||
-      !/^[^\s@]+@[^\s@]+$/.test(universityEmail) || !emailDomains.includes(emailDomain(universityEmail)) ||
-      ids.has(studentId) || emails.has(universityEmail)) throw new Error('The private roster contains an invalid or duplicate entry.')
-    ids.add(studentId)
-    emails.add(universityEmail)
-    return { studentId, universityEmail, displayName }
-  })
-  return liveRoster
+  return { emailDomains, hostedDomains }
 }
 export function bookingOpen() {
   if (process.env.BOOKING_ENABLED !== 'true') return false
