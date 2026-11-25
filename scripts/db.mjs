@@ -1,13 +1,14 @@
 import { readFile } from 'node:fs/promises'
 import pg from 'pg'
 
+import { databaseConfig } from '../lib/database-config.mjs'
+
 const [command, input] = process.argv.slice(2)
-const url = process.env.DATABASE_DIRECT_URL || process.env.DATABASE_URL
-if (!url || !['migrate', 'import'].includes(command) || (command === 'import' && !input)) {
-  console.error('Set DATABASE_URL and run npm run db:migrate or npm run db:import -- rooms.json.')
+if (!['migrate', 'import'].includes(command) || (command === 'import' && !input)) {
+  console.error('Run npm run db:migrate or npm run db:import -- rooms.json.')
   process.exit(1)
 }
-const client = new pg.Client({ connectionString: url })
+const client = new pg.Client({ ...databaseConfig(true), connectionTimeoutMillis: 10_000 })
 try {
   await client.connect()
   if (command === 'migrate') {

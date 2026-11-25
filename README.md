@@ -11,7 +11,7 @@ npm ci
 cp .env.example .env.local
 ```
 
-Fill in `.env.local` using the live configuration steps below. For Supabase, copy the transaction pooler connection string into `DATABASE_URL`. Use a direct or session-mode connection in `DATABASE_DIRECT_URL` for schema changes and imports. Keep these values private and use a separate database for testing.
+Fill in `.env.local` using the live configuration steps below. For Supabase, copy the transaction pooler connection string into `DATABASE_URL`. Use a direct or session-mode connection in `DATABASE_DIRECT_URL` for schema changes and imports. On Vercel, the Supabase integration's `POSTGRES_URL` and `POSTGRES_URL_NON_POOLING` are supported without duplicating credentials. Explicit `DATABASE_*` URLs take precedence, so a custom runtime URL is never silently paired with a different integration database for maintenance. Supabase connections use verified TLS. Keep these values private and use a separate database for testing.
 
 ```sh
 npm run db:migrate
