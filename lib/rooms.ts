@@ -1,5 +1,6 @@
 import 'server-only'
 import { Pool, type PoolClient } from 'pg'
+import { databaseConfig } from './database-config.mjs'
 import { bookingOpen, roster } from './config'
 import type { Booking, Inventory, Room, RoomDetail } from './types'
 
@@ -7,8 +8,11 @@ type RoomRecord = { id: string; room_label: string; hostel: string; floor: strin
 type Occupied = { student_id: string; slot: number }
 const database = globalThis as typeof globalThis & { e24Pool?: Pool }
 function pool() {
-  if (!process.env.DATABASE_URL) throw new Error('Set DATABASE_URL.')
-  return database.e24Pool ??= new Pool({ connectionString: process.env.DATABASE_URL, max: 5, idleTimeoutMillis: 10_000, connectionTimeoutMillis: 5_000 })
+  if (!database.e24Pool) {
+    database.e24Pool = new Pool({ ...databaseConfig(), max: 5, idleTimeoutMillis: 10_000, connectionTimeoutMillis: 5_000 })
+    database.e24Pool.on('error', () => console.error('An idle database connection was lost.'))
+  }
+  return database.e24Pool
 }
 function roomView(room: RoomRecord, occupied: number): Room {
   return { id: room.id, label: room.room_label, hostel: room.hostel, floor: room.floor, occupied, capacity: room.capacity,
