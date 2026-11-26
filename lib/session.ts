@@ -1,12 +1,11 @@
 import 'server-only'
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto'
 import { cookies } from 'next/headers'
-import { universityDomains, emailDomain } from './config'
-import { activeStudent } from './students'
+import { findStudentByEmail, type Student } from './students'
 
 export const sessionName = 'e24-session'
 export const oauthName = 'e24-oauth'
-type Identity = { sub: string; email: string; hd: string }
+type Identity = { sub: string; email: string }
 
 function key() {
   const secret = process.env.AUTH_SECRET
@@ -36,17 +35,20 @@ export function unseal<T>(name: string, value?: string): T | null {
 export function cookieOptions(origin: string, maxAge: number) {
   return { httpOnly: true, secure: origin.startsWith('https:'), sameSite: 'lax' as const, path: '/', maxAge }
 }
-export async function eligible(identity: Identity) {
-  const email = identity.email.trim().toLowerCase()
-  if (identity.sub && email === 'lextargaryens@gmail.com') return { studentId: 'master-viewer', universityEmail: identity.email, displayName: 'Viewer', readOnly: true }
-  const { emailDomains, hostedDomains } = universityDomains()
-  if (!identity.sub || !hostedDomains.includes(identity.hd) || !emailDomains.includes(emailDomain(email))) return null
-  return activeStudent(email)
-}
-export async function authorization() {
+export async function authorization(): Promise<
+  | { student: Student; status: 200 }
+  | { student: null; status: 401 | 403 | 503 }
+> {
   const value = (await cookies()).get(sessionName)?.value
   const identity = unseal<Identity>(sessionName, value)
-  if (!identity) return { student: null, status: 401 as const }
-  const student = await eligible(identity)
-  return student ? { student, status: 200 as const } : { student: null, status: 403 as const }
+  if (!identity || typeof identity.sub !== 'string' || typeof identity.email !== 'string') {
+    return { student: null, status: 401 }
+  }
+
+  try {
+    const student = await findStudentByEmail(identity.email)
+    return student ? { student, status: 200 } : { student: null, status: 403 }
+  } catch {
+    return { student: null, status: 503 }
+  }
 }

@@ -1,12 +1,21 @@
 -- Gefyra: run this entire file in Supabase Dashboard > SQL Editor.
 -- Schema source: db/schema.sql. Inventory source: db/akbar-rooms.json.
--- Creates tables and inserts missing rooms; existing rooms and bookings are preserved.
--- RLS is enabled with no client policies: access goes through the Next.js server.
--- Configure DATABASE_URL with the privileged server-side Postgres connection string.
--- Import student identities separately using the private server-side roster importer.
+-- Creates tables and inserts missing rooms; existing student records and bookings are preserved.
+-- RLS is enabled without client policies. The Next.js server reads through its server-only Supabase key.
+-- Populate eligible_students with approved student IDs, exact emails, and display names.
 
 BEGIN;
 SET LOCAL search_path = public;
+CREATE TABLE IF NOT EXISTS public.eligible_students (
+  student_id text PRIMARY KEY CHECK (student_id ~ '^[A-Za-z0-9_./-]{1,80}$'),
+  university_email text NOT NULL UNIQUE CHECK (
+    university_email = lower(btrim(university_email)) AND
+    university_email ~ '^[^[:space:]@]+@[^[:space:]@]+$'
+  ),
+  display_name text NOT NULL CHECK (length(btrim(display_name)) BETWEEN 1 AND 120)
+);
+ALTER TABLE public.eligible_students ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON public.eligible_students TO service_role;
 CREATE TABLE IF NOT EXISTS rooms (
   id text PRIMARY KEY,
   room_label text NOT NULL,
@@ -129,16 +138,6 @@ INSERT INTO rooms (id, room_label, hostel, floor, active, capacity) VALUES
   ('akbar-1497', '1497', 'Akbar Wing', 'Top', true, 2),
   ('akbar-1498', '1498', 'Akbar Wing', 'Top', true, 2)
 ON CONFLICT DO NOTHING;
-CREATE TABLE IF NOT EXISTS public.eligible_students (
-  student_id text PRIMARY KEY CHECK (student_id ~ '^[A-Za-z0-9_./-]{1,80}$'),
-  university_email text NOT NULL UNIQUE CHECK (
-    university_email = lower(btrim(university_email)) AND
-    university_email ~ '^[^[:space:]@]+@[^[:space:]@]+$'
-  ),
-  display_name text NOT NULL CHECK (length(btrim(display_name)) BETWEEN 1 AND 120),
-  active boolean NOT NULL DEFAULT true
-);
-ALTER TABLE public.eligible_students ENABLE ROW LEVEL SECURITY;
 -- This app uses server-side Google sessions, not Supabase Auth policies.
 REVOKE ALL ON public.eligible_students FROM PUBLIC;
 DO $$

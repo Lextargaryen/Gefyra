@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function MyRoom() {
   const auth = await authorization()
-  if (!auth.student) redirect(auth.status === 401 ? '/' : '/access-denied')
+  if (!auth.student) redirect(auth.status === 401 ? '/' : auth.status === 403 ? '/access-denied' : '/?status=unavailable')
   const booking = await existingBooking(auth.student.studentId).catch(() => undefined)
   if (booking === null) redirect('/rooms')
   const room = booking ? await roomDetail(booking.roomId, auth.student.studentId).catch(() => null) : null

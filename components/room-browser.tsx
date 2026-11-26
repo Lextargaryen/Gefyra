@@ -53,9 +53,9 @@ function RoomCard({ room, selected, booked, onSelect }: { room: Room; selected: 
 
 type PanelProps = {
   room?: Room; detail: RoomDetail | null; error: boolean; retry: () => void; open: boolean;
-  booking: Booking | null; bookingKnown: boolean; readOnly: boolean; onConfirm: () => void; onClose?: () => void;
+  booking: Booking | null; bookingKnown: boolean; onConfirm: () => void; onClose?: () => void;
 }
-function RoomPanel({ room, detail, error, retry, open, booking, bookingKnown, readOnly, onConfirm, onClose }: PanelProps) {
+function RoomPanel({ room, detail, error, retry, open, booking, bookingKnown, onConfirm, onClose }: PanelProps) {
   const current = detail?.id === room?.id ? detail : null
   const display = current ?? room
   const available = display?.status === 'empty' || display?.status === 'partial'
@@ -73,8 +73,7 @@ function RoomPanel({ room, detail, error, retry, open, booking, bookingKnown, re
           : current ? <Occupants room={current}/> : <p role="status">Loading occupants…</p>}
       </div>
       <div className="panel-footer">
-        {readOnly ? <p>This account has viewing access.</p>
-          : booking ? <Link className="button secondary wide" href="/my-room">Open my room <Icon name="arrow" size={17}/></Link>
+        {booking ? <Link className="button secondary wide" href="/my-room">Open my room <Icon name="arrow" size={17}/></Link>
           : !open ? <p>Room booking is currently closed.</p>
           : display.status === 'full' ? <p>This room is full. Choose another room.</p>
           : display.status === 'unavailable' ? <p>This room is currently unavailable.</p>
@@ -87,8 +86,8 @@ function RoomPanel({ room, detail, error, retry, open, booking, bookingKnown, re
   </>
 }
 
-export function RoomBrowser({ initialInventory, initialBooking, initialBookingKnown, readOnly }: {
-  initialInventory: Inventory | null; initialBooking: Booking | null; initialBookingKnown: boolean; readOnly: boolean
+export function RoomBrowser({ initialInventory, initialBooking, initialBookingKnown }: {
+  initialInventory: Inventory | null; initialBooking: Booking | null; initialBookingKnown: boolean
 }) {
   const [inventory, setInventory] = useState(initialInventory)
   const [booking, setBooking] = useState(initialBooking)
@@ -247,7 +246,7 @@ export function RoomBrowser({ initialInventory, initialBooking, initialBookingKn
   }
 
   const panel: PanelProps = { room: selectedRoom, detail, error: detailError, retry: refreshDetails,
-    open: inventory?.bookingOpen ?? false, booking, bookingKnown, readOnly, onConfirm: () => setConfirm(true) }
+    open: inventory?.bookingOpen ?? false, booking, bookingKnown, onConfirm: () => setConfirm(true) }
   const availability = rooms.filter(room => room.status === 'empty' || room.status === 'partial').length
 
   return <main id="main" className="room-page">

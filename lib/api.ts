@@ -1,7 +1,7 @@
 import 'server-only'
 import { NextResponse } from 'next/server'
 import { authorization } from './session'
-import type { Student } from './config'
+import type { Student } from './students'
 
 export function respond(body: object, status = 200) {
   return NextResponse.json(body, { status, headers: { 'Cache-Control': 'private, no-store' } })
@@ -9,7 +9,10 @@ export function respond(body: object, status = 200) {
 export async function protectedApi(handle: (student: Student) => Promise<NextResponse>) {
   try {
     const auth = await authorization()
-    if (!auth.student) return respond({ code: auth.status === 401 ? 'UNAUTHENTICATED' : 'INELIGIBLE' }, auth.status)
+    if (!auth.student) {
+      if (auth.status === 503) return respond({ code: 'TEMPORARILY_UNAVAILABLE' }, 503)
+      return respond({ code: auth.status === 401 ? 'UNAUTHENTICATED' : 'INELIGIBLE' }, auth.status)
+    }
     return await handle(auth.student)
   } catch {
     return respond({ code: 'TEMPORARILY_UNAVAILABLE' }, 503)

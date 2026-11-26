@@ -55,7 +55,7 @@ export async function finishGoogle(params: URLSearchParams, flow: OAuthFlow, ori
     !Number.isFinite(claims.exp) || claims.exp <= now || !Number.isFinite(claims.iat) || claims.iat > now + 60 ||
     (claims.nbf !== undefined && (!Number.isFinite(claims.nbf) || claims.nbf > now)) ||
     typeof claims.nonce !== 'string' || !matches(claims.nonce, flow.nonce) ||
-    claims.email_verified !== true || typeof claims.email !== 'string' || (claims.hd !== undefined && typeof claims.hd !== 'string') ||
-    typeof claims.sub !== 'string' || !claims.sub) throw new Error('Account is ineligible or the token is invalid.')
-  return { sub: claims.sub, email: claims.email.trim().toLowerCase(), hd: (claims.hd ?? '').trim().toLowerCase() }
+    claims.email_verified !== true || typeof claims.email !== 'string' ||
+    typeof claims.sub !== 'string' || !claims.sub) throw new Error('The Google identity token is invalid.')
+  return { sub: claims.sub, email: claims.email.trim().toLowerCase() }
 }
