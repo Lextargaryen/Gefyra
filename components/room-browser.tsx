@@ -73,11 +73,11 @@ function RoomPanel({ room, detail, error, retry, open, booking, bookingKnown, on
           : current ? <Occupants room={current}/> : <p role="status">Loading occupants…</p>}
       </div>
       <div className="panel-footer">
-        {booking ? <Link className="button secondary wide" href="/my-room">Open my room <Icon name="arrow" size={17}/></Link>
+        {booking?.roomId === display.id ? <Link className="button secondary wide" href="/my-room">Open my room <Icon name="arrow" size={17}/></Link>
           : !open ? <p>Room booking is currently closed.</p>
           : display.status === 'full' ? <p>This room is full. Choose another room.</p>
           : display.status === 'unavailable' ? <p>This room is currently unavailable.</p>
-          : <button className="button primary wide" type="button" disabled={!current || error || !bookingKnown} onClick={onConfirm}>Confirm room <Icon name="arrow" size={17}/></button>}
+          : <button className="button primary wide" type="button" disabled={!current || error || !bookingKnown} onClick={onConfirm}>{booking ? 'Change to this room' : 'Confirm room'} <Icon name="arrow" size={17}/></button>}
       </div>
     </> : <div className="empty-panel">
       <div className="empty-icon"><Icon name="door" size={28}/></div>
@@ -198,20 +198,24 @@ export function RoomBrowser({ initialInventory, initialBooking, initialBookingKn
     setRevision(value => value + 1)
   }
   async function submit() {
-    if (!selectedRoom || submitLock.current) return
+    if (!selectedRoom || !bookingKnown || submitLock.current) return
     submitLock.current = true
     setPending(true)
     setNotice('')
     inventoryRequest.current?.abort()
     detailRequest.current?.abort()
     try {
-      const response = await fetch('/api/bookings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ roomId: selectedRoom.id }) })
+      const response = await fetch('/api/bookings', { method: booking ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: selectedRoom.id, ...(booking ? { fromRoomId: booking.roomId } : {}) }) })
       const outcome = await response.json()
       if (response.ok && outcome.booking) {
         window.location.assign('/my-room')
         return
       }
-      if (outcome.code === 'ALREADY_BOOKED' && outcome.booking) {
+      if (outcome.code === 'BOOKING_CHANGED') {
+        setBooking(outcome.booking)
+        setNotice('Your booking changed in another request. Check your current room before trying again.')
+      } else if (outcome.code === 'ALREADY_BOOKED' && outcome.booking) {
         setBooking(outcome.booking)
         setNotice('You already have a confirmed room.')
       } else if (response.status === 401 || outcome.code === 'INELIGIBLE') {
@@ -230,7 +234,7 @@ export function RoomBrowser({ initialInventory, initialBooking, initialBookingKn
           return
         }
         setBooking(result.booking)
-        setNotice(result.booking ? 'You already have a confirmed room.' : 'We couldn’t save your booking. You can try again.')
+        setNotice(result.booking ? `Your confirmed room is still Room ${result.booking.roomLabel}. Check availability and try again.` : 'We couldn’t save your booking. You can try again.')
       } catch (error) {
         sessionRedirect(error)
         setBookingKnown(false)
@@ -251,7 +255,7 @@ export function RoomBrowser({ initialInventory, initialBooking, initialBookingKn
 
   return <main id="main" className="room-page">
     <div className="page-intro">
-      <div><p className="eyebrow">E24 · Hostel allocation</p><h1>Choose a room</h1><p>Select a room to view its occupants and claim one place.</p></div>
+      <div><p className="eyebrow">E24 · Hostel allocation</p><h1>{booking ? 'Change your room' : 'Choose a room'}</h1><p>{booking ? 'Choose another room. Your current place stays reserved until you confirm the change.' : 'Select a room to view its occupants and claim one place.'}</p></div>
       {inventory && <div className={'allocation-state' + (inventory.bookingOpen ? ' is-open' : '')}><i/>{inventory.bookingOpen ? 'Booking open' : 'Booking closed'}</div>}
     </div>
     {booking && <div className="booking-banner"><span className="banner-icon"><Icon name="check"/></span><div><strong>Your room is confirmed</strong><span>Room {booking.roomLabel} · {booking.hostel}</span></div><Link href="/my-room">Open my room <Icon name="arrow" size={17}/></Link></div>}
@@ -291,10 +295,11 @@ export function RoomBrowser({ initialInventory, initialBooking, initialBookingKn
     </dialog>
     <dialog className="confirm-dialog" ref={confirmDialog} aria-labelledby="confirm-title" onClose={() => setConfirm(false)} onCancel={event => { if (pending) event.preventDefault() }}>
       <div className="login-mark"><Icon name="door" size={23}/></div>
-      <h2 id="confirm-title">Confirm room {selectedRoom?.label}?</h2>
-      <p>This claims one place in the room. Other eligible E24 students can see your name in the room details. To request a change, contact the allocation team.</p>
+      <h2 id="confirm-title">{booking ? 'Change to' : 'Confirm'} room {selectedRoom?.label}?</h2>
+      {booking ? <p>You’ll move from Room {booking.roomLabel} ({booking.hostel}) to Room {selectedRoom?.label} ({selectedRoom?.hostel}). Your old place is released only if the new place is secured.</p>
+        : <p>This claims one place in the room. Other eligible E24 students can see your name in the room details. You can change rooms while booking is open.</p>}
       <div className="dialog-actions"><button className="button secondary" type="button" autoFocus disabled={pending} onClick={() => setConfirm(false)}>Go back</button>
-        <button className="button primary" type="button" disabled={pending || !bookingKnown} onClick={() => void submit()}>{pending ? 'Confirming…' : 'Confirm booking'}</button></div>
+        <button className="button primary" type="button" disabled={pending || !bookingKnown} onClick={() => void submit()}>{pending ? 'Confirming…' : booking ? 'Confirm change' : 'Confirm booking'}</button></div>
     </dialog>
   </main>
 }

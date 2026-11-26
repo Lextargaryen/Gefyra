@@ -49,3 +49,19 @@ export async function insertRows<T>(table: SupabaseTable, values: Record<string,
   if (!Array.isArray(rows)) throw new Error('Supabase returned an invalid response.')
   return rows as T[]
 }
+
+export async function updateBooking<T>(query: Record<string, string>, values: Record<string, unknown>): Promise<T[] | null> {
+  const { url, key } = requestUrl('bookings', query)
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: { ...headers(key), 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify(values),
+    cache: 'no-store',
+    signal: AbortSignal.timeout(8_000),
+  })
+  if (response.status === 409) return null
+  if (!response.ok) throw new Error('Supabase booking update failed.')
+  const rows: unknown = await response.json()
+  if (!Array.isArray(rows)) throw new Error('Supabase returned an invalid response.')
+  return rows as T[]
+}

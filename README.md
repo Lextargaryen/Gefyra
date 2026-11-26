@@ -72,6 +72,8 @@ Use a stable ID for each physical room. Imports update labels, location fields a
 
 A rostered student can confirm one place per round. Booking writes rely on database uniqueness for student IDs and room positions; if concurrent requests race for the same place, the app rechecks the booking and remaining slots. A same-room retry returns the original booking. Room positions are internal and do not assign beds.
 
+Students can select **Change room** on My room and confirm another available room while booking is open. A single conditional Supabase update moves the existing booking, so a failed update or a destination slot conflict leaves the old place reserved. The database's existing unique room/slot constraint prevents two students taking the same place. Concurrent edits compare the original room and confirmation time, and conflicts retry against refreshed availability. This feature uses the existing Supabase API credentials and tables: no SQL migration or Vercel configuration changes are required.
+
 The Google OAuth flow uses the documented authorization-code and JWKS endpoints with PKCE, state and nonce checks. Token verification is implemented with Node's cryptography APIs. The callback requires the configured Google OAuth client and the exact authorized redirect URI.
 
 - [Google OpenID Connect](https://developers.google.com/identity/openid-connect/openid-connect)

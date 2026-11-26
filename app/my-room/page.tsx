@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { Footer, Header } from '../../components/chrome'
 import { Icon } from '../../components/icon'
 import { Occupants } from '../../components/occupants'
-import { support } from '../../lib/config'
+import { bookingOpen, support } from '../../lib/config'
 import { existingBooking, roomDetail } from '../../lib/rooms'
 import { authorization } from '../../lib/session'
 export const metadata = { title: 'My room' }
@@ -26,6 +26,10 @@ export default async function MyRoom() {
         <h3>Current roommates</h3>
         {room ? <Occupants room={room}/> : <p>We couldn’t load your roommates. <a href="/my-room">Try again</a>.</p>}
       </section>
+      {bookingOpen() ? <div className="room-change-actions">
+        <Link href="/rooms" className="button secondary">Change room <Icon name="arrow" size={17}/></Link>
+        <p>Your current place stays reserved until your new room is confirmed.</p>
+      </div> : <p className="room-change-actions">Room changes are currently closed.</p>}
     </> : <><h1>Your room</h1><p>We couldn’t load your booking. <a href="/my-room">Try again</a>.</p></>}
   </main><Footer support={support()}/></>
 }

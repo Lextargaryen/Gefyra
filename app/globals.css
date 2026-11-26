@@ -156,6 +156,8 @@ dialog::backdrop {background:#192b25a1}
 .confirmed-card {border:1px solid var(--line); background:#fff; border-radius:13px; margin-top:22px; padding:23px; box-shadow:var(--shadow)}
 .confirmed-heading {display:flex; align-items:center; justify-content:space-between; gap:10px; padding-bottom:13px; margin-bottom:15px; border-bottom:1px solid var(--line)}
 .confirmed-heading h2 {font-size:1.8rem; margin:4px 0 0; letter-spacing:-.045em}
+.room-change-actions {margin-top:20px}
+.room-change-actions p {margin-top:10px; color:var(--muted); font-size:.88rem}
 
 @media (max-width: 1000px) {
   .header-inner,.footer-inner,.room-page {padding-left:28px; padding-right:28px}
