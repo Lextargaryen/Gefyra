@@ -24,8 +24,8 @@ Open http://localhost:3000 and sign in with a Google account whose email appears
 1. In your Supabase project, open **SQL Editor**, create a new query, and run [`db/supabase-setup.sql`](db/supabase-setup.sql).
 2. The setup creates `public.eligible_students`, `public.rooms`, and `public.bookings`, enables row-level security without public client policies, and inserts missing Akbar rooms. Existing student rows, bookings, and room configuration are preserved.
 3. Configure `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as server-only environment variables. Never prefix the service-role key with `NEXT_PUBLIC_` or send it to a browser.
-4. The `eligible_students` table is the access list. A row with the verified Google email grants access; the app reads `student_id` and `display_name` from that same row. Remove a row to revoke access. No domain allowlist, status flag, or JSON roster is used.
-5. The app uses Supabase for runtime room and booking reads/writes. PostgreSQL connection strings are optional and only needed for `db:migrate` / `db:import` maintenance commands.
+4. The `eligible_students` table is the access list. A row with the verified Google email grants access; the app reads `student_id` and `display_name` from that same row. Remove a row to revoke access. No domain allowlist or JSON roster is used; any legacy `active` column is ignored.
+5. The app uses Supabase for runtime room and booking reads/writes. PostgreSQL connection strings are optional and only needed for maintenance commands.
 
 For later schema-only updates use `db/schema.sql` or the setup SQL. To apply intentional room inventory changes, use `npm run db:import -- db/akbar-rooms.json`; that optional script needs `DATABASE_URL` or `DATABASE_DIRECT_URL`.
 
@@ -50,7 +50,7 @@ The `public.eligible_students` table is the single source of truth for access an
 | `university_email` | Google account email to match, stored in lowercase |
 | `display_name` | Name shown to other students in room details |
 
-Keep student IDs stable across roster updates so existing bookings remain associated with the correct person. Remove a row to revoke access; existing bookings remain and the occupant is shown as **Occupied**.
+Keep student IDs stable across roster updates so existing bookings remain associated with the correct person. Remove a row to revoke access; existing bookings remain and the occupant is shown as **Occupied**. Any legacy `active` column is ignored.
 
 ### Room inventory format
 
@@ -70,7 +70,7 @@ Use a stable ID for each physical room. Imports update labels, location fields a
 
 ### Booking behavior
 
-An active student can confirm one place per round. Booking writes rely on database uniqueness for student IDs and room positions; if concurrent requests race for the same place, the app rechecks the booking and remaining slots. A same-room retry returns the original booking. Room positions are internal and do not assign beds.
+A rostered student can confirm one place per round. Booking writes rely on database uniqueness for student IDs and room positions; if concurrent requests race for the same place, the app rechecks the booking and remaining slots. A same-room retry returns the original booking. Room positions are internal and do not assign beds.
 
 The Google OAuth flow uses the documented authorization-code and JWKS endpoints with PKCE, state and nonce checks. Token verification is implemented with Node's cryptography APIs. The callback requires the configured Google OAuth client and the exact authorized redirect URI.
 

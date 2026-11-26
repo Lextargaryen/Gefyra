@@ -6,7 +6,6 @@ import type { Booking, Inventory, Room, RoomDetail } from './types'
 
 type RoomRecord = { id: string; room_label: string; hostel: string; floor: string | null; active: boolean; capacity: number }
 type BookingRecord = { student_id: string; room_id: string; slot: number; created_at: string }
-
 function roomView(room: RoomRecord, occupied: number): Room {
   return { id: room.id, label: room.room_label, hostel: room.hostel, floor: room.floor, occupied, capacity: room.capacity,
     status: !room.active ? 'unavailable' : occupied >= room.capacity ? 'full' : occupied > 0 ? 'partial' : 'empty' }

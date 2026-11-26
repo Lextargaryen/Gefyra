@@ -4,3 +4,7 @@ node_modules/
 !.env.example
 *.tsbuildinfo
 .vercel/
+
+# Private roster inputs
+eligible-students*.json
+private/

@@ -6,7 +6,9 @@ import { cookieOptions, oauthName, seal, sessionName, unseal } from '../../../..
 
 type Context = { params: Promise<{ action: string }> }
 function go(path: string, origin: string) {
-  return NextResponse.redirect(new URL(path, origin), 303)
+  const response = NextResponse.redirect(new URL(path, origin), 303)
+  response.headers.set('Cache-Control', 'private, no-store')
+  return response
 }
 function session(response: NextResponse, origin: string, identity: { sub: string; email: string }) {
   const seconds = 2 * 60 * 60
