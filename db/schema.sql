@@ -1,4 +1,10 @@
 BEGIN;
+CREATE TABLE IF NOT EXISTS eligible_students (
+  student_id text PRIMARY KEY,
+  university_email text NOT NULL UNIQUE,
+  display_name text NOT NULL
+);
+ALTER TABLE eligible_students ENABLE ROW LEVEL SECURITY;
 CREATE TABLE IF NOT EXISTS rooms (
   id text PRIMARY KEY,
   room_label text NOT NULL,

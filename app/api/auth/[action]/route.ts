@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { appOrigin, sameOrigin } from '../../../../lib/config'
 import { beginGoogle, finishGoogle, type OAuthFlow } from '../../../../lib/google'
-import { cookieOptions, eligible, oauthName, seal, sessionName, unseal } from '../../../../lib/session'
+import { findStudentByEmail } from '../../../../lib/students'
+import { cookieOptions, oauthName, seal, sessionName, unseal } from '../../../../lib/session'
 
 type Context = { params: Promise<{ action: string }> }
 function go(path: string, origin: string) {
   return NextResponse.redirect(new URL(path, origin), 303)
 }
-function session(response: NextResponse, origin: string, identity: { sub: string; email: string; hd: string }) {
+function session(response: NextResponse, origin: string, identity: { sub: string; email: string }) {
   const seconds = 2 * 60 * 60
   response.cookies.set(sessionName, seal(sessionName, identity, seconds), cookieOptions(origin, seconds))
   return response
@@ -25,7 +26,8 @@ export async function GET(request: NextRequest, { params }: Context) {
     }
     const flow = unseal<OAuthFlow>(oauthName, request.cookies.get(oauthName)?.value)
     const identity = flow ? await finishGoogle(request.nextUrl.searchParams, flow, origin).catch(() => null) : null
-    const result = identity && eligible(identity) ? session(go('/rooms', origin), origin, identity) : go('/access-denied', origin)
+    const student = identity ? await findStudentByEmail(identity.email) : null
+    const result = student && identity ? session(go('/rooms', origin), origin, identity) : go('/access-denied', origin)
     result.cookies.set(oauthName, '', cookieOptions(origin, 0))
     return result
   } catch {

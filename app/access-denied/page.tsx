@@ -8,7 +8,7 @@ export default function AccessDenied() {
     <section className="login-card">
       <div className="login-mark"><Icon name="lock" size={26}/></div>
       <h1>This account can’t access room allocation</h1>
-      <p className="login-copy">Use your university Google account. If you’re an eligible E24 student and still can’t sign in, contact the allocation team.</p>
+      <p className="login-copy">Use the same Google email listed in the student access table. If you think your email should be listed, contact the allocation team.</p>
       <SignIn retry/>
     </section>
   </main><Footer support={support()}/></>

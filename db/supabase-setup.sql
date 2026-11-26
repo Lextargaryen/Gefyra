@@ -1,12 +1,17 @@
 -- Gefyra: run this entire file in Supabase Dashboard > SQL Editor.
 -- Schema source: db/schema.sql. Inventory source: db/akbar-rooms.json.
--- Creates tables and inserts missing rooms; existing rooms and bookings are preserved.
--- RLS is enabled with no client policies: access goes through the Next.js server.
--- Configure DATABASE_URL with the privileged server-side Postgres connection string.
--- Student identities and names are configured in ELIGIBLE_STUDENTS_JSON, not stored here.
+-- Creates tables and inserts missing rooms; existing student records and bookings are preserved.
+-- RLS is enabled without client policies. The Next.js server reads through its server-only Supabase key.
+-- Populate eligible_students with approved student IDs, exact emails, and display names.
 
 BEGIN;
 SET LOCAL search_path = public;
+CREATE TABLE IF NOT EXISTS eligible_students (
+  student_id text PRIMARY KEY,
+  university_email text NOT NULL UNIQUE,
+  display_name text NOT NULL
+);
+ALTER TABLE eligible_students ENABLE ROW LEVEL SECURITY;
 CREATE TABLE IF NOT EXISTS rooms (
   id text PRIMARY KEY,
   room_label text NOT NULL,

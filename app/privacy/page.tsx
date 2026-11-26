@@ -10,9 +10,9 @@ export default function Privacy() {
     <Link href="/" className="back-link"><Icon name="back" size={17}/> Hostel allocation</Link>
     <h1>Room allocation privacy</h1>
     <h2>Account and eligibility</h2>
-    <p>In live mode, we use your verified university Google account and the E24 eligibility roster to confirm access. We associate your booking with your roster student ID.</p>
+    <p>We use your verified Google email to check the student list in Supabase. If your email is listed, you can access room allocation. Bookings are associated with your student ID.</p>
     <h2>Room details</h2>
-    <p>Eligible, signed-in E24 students can see your roster display name in the details of the room you confirm. Room details show occupancy and display names.</p>
+    <p>Students whose Google email appears in the access table can see your name from that table in the details of the room you confirm. Room details show occupancy and display names.</p>
     {process.env.RETENTION_TERMS && <><h2>Data retention</h2><p>{process.env.RETENTION_TERMS}</p></>}
     {contact && <><h2>Contact</h2><p>For questions about your allocation data, <a href={'mailto:' + contact}>contact the allocation team</a>.</p></>}
   </main><Footer support={contact}/></>

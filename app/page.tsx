@@ -13,7 +13,8 @@ export default async function Home() {
       <div className="login-mark"><Icon name="building" size={27}/></div>
       <p className="eyebrow">University of Peradeniya</p>
       <h1 id="login-title">E24 Hostel<br/>Allocation</h1>
-      <p className="login-copy">Sign in with your university Google account to choose a hostel room.</p>
+      <p className="login-copy">Sign in with the Google account listed for your student record to choose a hostel room.</p>
+      {auth.status === 503 && <p className="notice" role="status">Sign-in is temporarily unavailable. Please try again shortly.</p>}
       <SignIn/>
       <div className="privacy-note"><Icon name="lock" size={17}/><p>Only eligible E24 students can see occupant names. <Link href="/privacy">Privacy details</Link></p></div>
     </section>
